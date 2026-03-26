@@ -30,6 +30,7 @@ function useUsers() {
 
 export default function App() {
   const { filtered, setSearch, setUsers } = useUsers();
+  const [newSearch, setNewSearch] = useState("");
   const [form, setForm] = useState({ name: "", age: "" });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -60,12 +61,15 @@ export default function App() {
       [name]: value,
     }));
   };
-
+  function handleSearch() {
+    setSearch(newSearch);
+  }
   return (
     <div>
       <h1>Users</h1>
       <label>Search:</label>
-      <input onChange={(e) => setSearch(e.target.value)} />
+      <input onChange={(e) => setNewSearch(e.target.value)} />
+      <button onClick={handleSearch}>Search</button>
 
       <form onSubmit={handleSubmit}>
         <label>Name:</label>
@@ -80,7 +84,7 @@ export default function App() {
         <button>Add</button>
       </form>
       {/*possibly undefibed(10)*/}
-      <div style={{display:"flex",flexWrap:"wrap",gap:"5px"}}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
         {filtered &&
           filtered.map((u: User) => (
             <div
